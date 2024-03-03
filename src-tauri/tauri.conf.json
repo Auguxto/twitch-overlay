@@ -17,7 +17,8 @@
         "open": true
       },
       "window": {
-        "startDragging": true
+        "startDragging": true,
+        "setSize": true
       }
     },
     "systemTray": {
@@ -28,11 +29,12 @@
       {
         "title": "Twitch Chat Overlay",
         "width": 300,
-        "height": 600,
+        "height": 330,
         "resizable": true,
         "decorations": false,
         "transparent": true,
-        "alwaysOnTop": false
+        "alwaysOnTop": false,
+        "center": true
       }
     ],
     "security": {

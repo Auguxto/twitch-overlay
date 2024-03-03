@@ -14,16 +14,20 @@ fn set_always_on_top(value: bool, handle: AppHandle) {
     };
 }
 
+#[tauri::command]
+fn connect_to_chat(value: String, handle: AppHandle) {
+    println!("Connecting to chat: {}", value);
+    twitch::connect_to_chat(value, handle);
+}
+
 fn main() {
     tauri::Builder::default()
         .setup(move |app| {
             let handle = app.handle();
 
-            twitch::connect_to_chat("#ale_apoka".to_string(), handle);
-
             Ok(())
         })
-        .invoke_handler(tauri::generate_handler![set_always_on_top])
+        .invoke_handler(tauri::generate_handler![set_always_on_top, connect_to_chat])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
