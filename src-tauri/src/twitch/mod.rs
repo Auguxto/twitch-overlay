@@ -36,7 +36,7 @@ pub fn connect_to_chat(channel_name: String, app: tauri::AppHandle) {
                 // Handle the message
                 Ok(msg) => match msg.as_typed() {
                     Ok(tmi::Message::Privmsg(msg)) => {
-                        println!("{:?}", msg);
+                        // println!("{:?}", msg);
                         let _ = app.app_handle().get_window("main").unwrap().emit_all(
                             "twitch_message_received",
                             Message {

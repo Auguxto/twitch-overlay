@@ -1,54 +1,10 @@
 import styled from "styled-components";
 
-import logo from "../assets/images/app-icon.svg";
-
-export const TitleBar = styled.div`
-  display: flex;
-
-  align-items: center;
-  justify-content: space-between;
-
-  width: 100%;
-  height: 30px;
-
-  background: #8343c8;
-
-  padding-right: 5px;
-
-  user-select: none;
-`;
-
-export const TitleBarBrand = styled.div`
-  display: flex;
-
-  align-items: center;
-
-  gap: 5px;
-`;
-
-export const TitleBarTitle = styled.div`
-  font-size: 10px;
-  font-family: "Twitch", sans-serif;
-
-  color: #ffffff;
-
-  margin-top: -10px;
-`;
-
-export const TitleBarLogo = styled.img.attrs({
-	src: logo,
-	alt: "Twitch",
-	draggable: false,
-})`
-  width: 25px;
-  height: 25px;
-`;
-
 export const Container = styled.div`
   display: flex;
 
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - 30px);
 
   flex-direction: column;
 
@@ -78,6 +34,8 @@ export const MessagesContainer = styled.div`
 export const MessageContainer = styled.div<{ broadcaster: boolean }>`
   background-color: ${({ broadcaster }) =>
 		broadcaster ? "#8343c8" : "transparent"};
+
+    text-align: justify;
 `;
 
 export const MessageSender = styled.span<{ color?: string }>`
@@ -101,7 +59,7 @@ export const ChannelContainer = styled.div`
   flex-direction: column;
 
   width: 100%;
-  height: 330px;
+  height: 300px;
 
   background-color: #1c1c1c;
 

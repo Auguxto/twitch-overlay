@@ -6,7 +6,7 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "twitch-overlay",
+    "productName": "Twitch Chat Overlay",
     "version": "0.0.1"
   },
   "tauri": {
@@ -43,7 +43,8 @@
     "bundle": {
       "active": true,
       "targets": "all",
-      "identifier": "com.tauri.dev",
+      "publisher": "Victor Augusto Ferreira",
+      "identifier": "com.auguxto.twitchchatoverlay",
       "icon": [
         "icons/32x32.png",
         "icons/128x128.png",
