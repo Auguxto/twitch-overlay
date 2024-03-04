@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { LogicalSize, appWindow } from "@tauri-apps/api/window";
 import { invoke } from "@tauri-apps/api/tauri";
 
@@ -7,6 +7,7 @@ import TitleBar from "../components/titlebar";
 import { ChatContext } from "../context/chat";
 
 import * as S from "./styles";
+import { For } from "million/react";
 
 export default function App() {
 	// Refs
@@ -67,18 +68,20 @@ export default function App() {
 						ref={chatContainer}
 						className="messages-container"
 					>
-						{messages.map((message) => (
-							<S.MessageContainer
-								key={message.id}
-								// Change to sernder login not username
-								broadcaster={message.sender === channel}
-							>
-								<S.MessageSender color={message.color}>
-									{message.sender}:
-								</S.MessageSender>
-								<S.MessageText>{message.text}</S.MessageText>
-							</S.MessageContainer>
-						))}
+						<For each={messages}>
+							{(message) => (
+								<S.MessageContainer
+									key={message.id}
+									// Change to sernder login not username
+									broadcaster={message.sender === channel}
+								>
+									<S.MessageSender color={message.color}>
+										{message.sender}:
+									</S.MessageSender>
+									<S.MessageText>{message.text}</S.MessageText>
+								</S.MessageContainer>
+							)}
+						</For>
 						<div ref={chatEnd} />
 					</S.MessagesContainer>
 				</S.Container>

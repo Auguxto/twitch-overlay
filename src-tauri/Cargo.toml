@@ -1,7 +1,7 @@
 [package]
 name = "twitch-overlay"
 version = "0.0.0"
-description = "A Tauri App"
+description = "Twitch Chat Overlay"
 authors = ["you"]
 edition = "2021"
 

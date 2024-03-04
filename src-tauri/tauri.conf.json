@@ -30,7 +30,7 @@
         "title": "Twitch Chat Overlay",
         "width": 300,
         "height": 330,
-        "resizable": true,
+        "resizable": false,
         "decorations": false,
         "transparent": true,
         "alwaysOnTop": false,

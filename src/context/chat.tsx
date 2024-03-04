@@ -27,10 +27,13 @@ export default function ChatProvider({ children }: ChatProviderProps) {
 
 	useInterval(
 		() => {
-			const lastMessages = messages.slice(-200);
-			setMessages(lastMessages);
+			if (messages.length > 200) {
+				console.log("clearing messages");
+				const lastMessages = messages.slice(-200);
+				setMessages(lastMessages);
+			}
 		},
-		1000 * 60 * 5,
+		1000 * 60 * 1,
 	);
 
 	return (
