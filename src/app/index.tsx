@@ -1,13 +1,13 @@
+import { For } from "million/react";
+import { invoke } from "@tauri-apps/api/tauri";
 import { useContext, useEffect, useRef } from "react";
 import { LogicalSize, appWindow } from "@tauri-apps/api/window";
-import { invoke } from "@tauri-apps/api/tauri";
 
 import TitleBar from "../components/titlebar";
 
 import { ChatContext } from "../context/chat";
 
 import * as S from "./styles";
-import { For } from "million/react";
 
 export default function App() {
 	// Refs
@@ -16,6 +16,7 @@ export default function App() {
 
 	// Context
 	const {
+		setChatIsPaused,
 		chatIsPaused,
 		messages,
 		setMessages,
@@ -31,8 +32,8 @@ export default function App() {
 			({ payload }: { payload: Message }) => {
 				setMessages((prevMessages) => [...prevMessages, payload]);
 
-				if (!chatIsPaused) {
-					chatEnd.current?.scrollIntoView({ behavior: "instant" });
+				if (!chatIsPaused && chatEnd.current) {
+					chatEnd.current.scrollIntoView({ behavior: "smooth" });
 				}
 			},
 		);
@@ -44,11 +45,24 @@ export default function App() {
 	}, [chatIsPaused, setMessages]);
 
 	// Setup chat when connected
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
+		if (chatContainer.current) {
+			chatContainer.current.addEventListener("wheel", () => {
+				setChatIsPaused(true);
+			});
+		}
+
 		if (chatIsConnected) {
 			appWindow.setSize(new LogicalSize(300, 600));
 		}
-	}, [chatIsConnected]);
+
+		return () => {
+			if (chatContainer.current) {
+				chatContainer.current.removeEventListener("wheel", () => {});
+			}
+		};
+	}, [chatIsConnected, chatContainer]);
 
 	// Functions
 	function connectToChat() {
@@ -83,6 +97,13 @@ export default function App() {
 							)}
 						</For>
 						<div ref={chatEnd} />
+						{chatIsPaused && (
+							<S.PauseContainer>
+								<S.PauseButton onClick={() => setChatIsPaused(false)}>
+									Chat Pausado
+								</S.PauseButton>
+							</S.PauseContainer>
+						)}
 					</S.MessagesContainer>
 				</S.Container>
 			) : (

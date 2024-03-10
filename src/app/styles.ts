@@ -121,3 +121,42 @@ export const ChannelButton = styled.button`
     background-color: #6f2da8;
   }
 `;
+
+export const PauseContainer = styled.div`
+  position: absolute;
+
+  bottom: 10px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: auto;
+`;
+
+export const PauseButton = styled.button`
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 5px 10px;
+
+  background-color: rgba(0,0,0,0.5);
+  border: #000000 solid 2px;
+  border-radius: 5px;
+
+  color: #FFFFFF;
+
+  cursor: pointer;
+
+  transition: all 0.2s;
+
+  font-family: "Inter";
+
+  &:hover {
+    scale: 1.02;
+  }
+`;

@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useReducer, useState } from "react";
+import { type ReactNode, createContext, useState } from "react";
 import { useInterval } from "usehooks-ts";
 
 type ChatContextProps = {
@@ -7,7 +7,7 @@ type ChatContextProps = {
 	channel: string;
 	setChannel: React.Dispatch<React.SetStateAction<string>>;
 	chatIsPaused: boolean;
-	toggleChatIsPaused: React.DispatchWithoutAction;
+	setChatIsPaused: React.Dispatch<React.SetStateAction<boolean>>;
 	chatIsConnected: boolean;
 };
 
@@ -21,26 +21,25 @@ export default function ChatProvider({ children }: ChatProviderProps) {
 	// States
 	const [messages, setMessages] = useState<Message[]>([]);
 	const [channel, setChannel] = useState("");
-	const [chatIsPaused, toggleChatIsPaused] = useReducer((s) => !s, false);
+	const [chatIsPaused, setChatIsPaused] = useState(false);
 
 	const chatIsConnected = messages.length > 0;
 
 	useInterval(
 		() => {
-			if (messages.length > 200) {
-				console.log("clearing messages");
+			if (messages.length > 300) {
 				const lastMessages = messages.slice(-200);
 				setMessages(lastMessages);
 			}
 		},
-		1000 * 60 * 1,
+		1000 * 60 * 2,
 	);
 
 	return (
 		<ChatContext.Provider
 			value={{
 				chatIsPaused,
-				toggleChatIsPaused,
+				setChatIsPaused,
 				messages,
 				setMessages,
 				channel,

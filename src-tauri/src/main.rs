@@ -24,6 +24,9 @@ fn main() {
     tauri::Builder::default()
         .setup(move |app| {
             let handle = app.handle();
+            let main_window = handle.get_window("main").unwrap();
+
+            &main_window.open_devtools();
 
             Ok(())
         })

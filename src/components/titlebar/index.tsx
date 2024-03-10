@@ -7,8 +7,7 @@ import * as S from "./styles";
 import { ChatContext } from "../../context/chat";
 
 export default function TitleBar() {
-	const { chatIsPaused, toggleChatIsPaused, chatIsConnected } =
-		useContext(ChatContext);
+	const { chatIsConnected } = useContext(ChatContext);
 
 	// Always on top toggle
 	const [alwaysOnTop, toggleAlwaysOnTop] = useReducer((s) => {
@@ -23,11 +22,11 @@ export default function TitleBar() {
 				<S.Title data-tauri-drag-region>Twitch Chat</S.Title>
 			</S.Brand>
 			<S.Buttons>
-				{chatIsConnected && (
-					<S.ActionButton onClick={toggleChatIsPaused}>
-						{chatIsPaused ? "play" : "pause"}
-					</S.ActionButton>
-				)}
+				{/* {chatIsConnected && (
+                    <S.ActionButton onClick={() => setChatIsPaused(!chatIsPaused)}>
+                        {chatIsPaused ? "play" : "pause"}
+                    </S.ActionButton>
+                )} */}
 				<Switch
 					width={30}
 					height={15}
