@@ -33,7 +33,7 @@ export default function App() {
 				setMessages((prevMessages) => [...prevMessages, payload]);
 
 				if (!chatIsPaused && chatEnd.current) {
-					chatEnd.current.scrollIntoView({ behavior: "smooth" });
+					chatEnd.current.scrollIntoView({ behavior: "instant" });
 				}
 			},
 		);
@@ -70,7 +70,7 @@ export default function App() {
 			return;
 		}
 
-		invoke("connect_to_chat", { value: `#${channel}` });
+		invoke("connect_to_chat", { value: `#${channel.toLowerCase()}` });
 	}
 
 	return (
@@ -86,8 +86,9 @@ export default function App() {
 							{(message) => (
 								<S.MessageContainer
 									key={message.id}
-									// Change to sernder login not username
-									broadcaster={message.sender === channel}
+									broadcaster={
+										message.login.toLowerCase() === channel.toLowerCase()
+									}
 								>
 									<S.MessageSender color={message.color}>
 										{message.sender}:
@@ -97,10 +98,14 @@ export default function App() {
 							)}
 						</For>
 						<div ref={chatEnd} />
-						{chatIsPaused && (
+						{chatIsPaused && messages.length > 0 && (
 							<S.PauseContainer>
-								<S.PauseButton onClick={() => setChatIsPaused(false)}>
-									Chat Pausado
+								<S.PauseButton
+									onClick={() => {
+										setChatIsPaused(false);
+									}}
+								>
+									Chat Paused
 								</S.PauseButton>
 							</S.PauseContainer>
 						)}

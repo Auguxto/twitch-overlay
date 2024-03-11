@@ -13,7 +13,7 @@ const blocked_keys = [
 	"F12",
 ];
 
-const blocked_ctrl_keys = ["f", "g", "p", "r", "u"];
+const blocked_ctrl_keys = ["f", "g", "p", "r", "u", "a"];
 
 window.addEventListener("keydown", (e) => {
 	if (
@@ -24,4 +24,4 @@ window.addEventListener("keydown", (e) => {
 	}
 });
 
-export {};
+export type {};

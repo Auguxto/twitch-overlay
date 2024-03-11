@@ -1,13 +1,15 @@
-import { useContext, useReducer } from "react";
 import { invoke } from "@tauri-apps/api";
+import { useContext, useReducer } from "react";
+import { appWindow } from "@tauri-apps/api/window";
+
+import { ChatContext } from "../../context/chat";
 
 import Switch from "../switch";
 
 import * as S from "./styles";
-import { ChatContext } from "../../context/chat";
 
 export default function TitleBar() {
-	const { chatIsConnected } = useContext(ChatContext);
+	const { chatIsConnected, channel } = useContext(ChatContext);
 
 	// Always on top toggle
 	const [alwaysOnTop, toggleAlwaysOnTop] = useReducer((s) => {
@@ -22,11 +24,15 @@ export default function TitleBar() {
 				<S.Title data-tauri-drag-region>Twitch Chat</S.Title>
 			</S.Brand>
 			<S.Buttons>
-				{/* {chatIsConnected && (
-                    <S.ActionButton onClick={() => setChatIsPaused(!chatIsPaused)}>
-                        {chatIsPaused ? "play" : "pause"}
-                    </S.ActionButton>
-                )} */}
+				{chatIsConnected && (
+					<S.ActionButton
+						onClick={() =>
+							appWindow.emit("close-chat", `#${channel.toLowerCase()}`)
+						}
+					>
+						close
+					</S.ActionButton>
+				)}
 				<Switch
 					width={30}
 					height={15}

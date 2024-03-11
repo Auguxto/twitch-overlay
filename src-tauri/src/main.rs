@@ -26,7 +26,9 @@ fn main() {
             let handle = app.handle();
             let main_window = handle.get_window("main").unwrap();
 
-            &main_window.open_devtools();
+            main_window.listen_global("chat-connected", |event| {
+                println!("Connected to chat: {}", event.payload().unwrap());
+            });
 
             Ok(())
         })
