@@ -28,7 +28,7 @@
     "windows": [
       {
         "title": "Twitch Chat Overlay",
-        "width": 300,
+        "width": 330,
         "height": 330,
         "resizable": false,
         "decorations": false,

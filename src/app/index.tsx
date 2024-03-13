@@ -32,8 +32,8 @@ export default function App() {
 			({ payload }: { payload: Message }) => {
 				setMessages((prevMessages) => [...prevMessages, payload]);
 
-				if (!chatIsPaused && chatEnd.current) {
-					chatEnd.current.scrollIntoView({ behavior: "instant" });
+				if (!chatIsPaused) {
+					scrollToChatEnd();
 				}
 			},
 		);
@@ -42,7 +42,7 @@ export default function App() {
 			// Unlisten
 			listenerTwitchMessageReceived.then((listener) => listener());
 		};
-	}, [chatIsPaused, setMessages]);
+	}, [setMessages, chatIsPaused]);
 
 	// Setup chat when connected
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
@@ -71,6 +71,12 @@ export default function App() {
 		}
 
 		invoke("connect_to_chat", { value: `#${channel.toLowerCase()}` });
+	}
+
+	function scrollToChatEnd() {
+		if (chatEnd.current) {
+			chatEnd.current.scrollIntoView({ behavior: "instant" });
+		}
 	}
 
 	return (
@@ -103,6 +109,7 @@ export default function App() {
 								<S.PauseButton
 									onClick={() => {
 										setChatIsPaused(false);
+										scrollToChatEnd();
 									}}
 								>
 									Chat Paused
